@@ -62,6 +62,42 @@ forbes <- forbes[-12,]
 # Aufgabe 2
 
 # 2a)
+# daten erfassen
+runner.distance <- c(100, 200, 400, 800, 1000, 1500, 2000, 3000, 5000, 10000, 20000, 25000, 30000)
+runner.time <- c(9.9, 19.8, 43.8, 103.7, 136, 213.1, 296.2, 457.6, 793.0, 1650.8, 3464.4, 4495.6, 5490.4)
+runner  <- data.frame(runner.distance, runner.time)
+
+# lineare Regression "walten lassen"
+runner.reg <- lm(runner[,"runner.time"] ~ runner[,"runner.distance"])
+summary(runner.reg)
+
+# Der P-Wert ist sehr sehr nahe an Null, d.h. es wäre sehr sehr unwahrscheinlich, dass heisst es muss einen Zusammenhang geben bzw. Beta_1 kann nicht Null sein
+
+# 2b)
+# Formel anwenden zur Berechnung des Vertrauensinterwalls
+konf.low <- 0.18170-(0.00173*(qt(0.975, df=11)))
+konf.high <- 0.18170+(0.00173*(qt(0.975, df=11)))
+konf.low
+konf.high
+# also ist es die Variante ii)
+
+# 2c)
+# Formel anwenden ohne die Störgrösse (Epsilon_i)
+# also Messung - b_0 + b_1*x 
+res.5 <- 136-(-62.59296+(0.1817*1000))
+
+# 2d)
+# Nein sollte man nicht können, denn über eine so lange Strecke werden Menschen anderst laufen (und andere Bedürfnisse haben die Zeit-relevant sind...)
+
+# 2e)
+# Der geschätzte Standardfehler wird im summary angegeben als sogenannter 'Residual standard error' und beträgt hier 62.68
+# wichtig hierbei ist, dass man sieht, dass es für kleine Distanzen keinen Sinn macht, denn die Zeiten sind da wesentlich kürzer als diese Abweichung bzw. Genauigkeit
+
+# 2f)
+# es müsste homogen verteilt sein (schön gestreut) aber man sieht eine strukturierte Abweichung, das heisst, dass das erstellte bzw. gewählte Modell systematisch falsch ist
+
+# 2g)
+# da der Plot zu 2f) irgendwie quadratisch aussieht, könnte man eine quadratische Formel formulieren
 
 # Aufgabe 3
 
@@ -89,5 +125,4 @@ alpha <- 0.95
 # intervall = Estimate +/- (Std. Error * qt(1-(alpha/2), Degree-of-Freedom))
 konf.low <- (0.0013729-(0.0002274*qt(1-(alpha/2), df=22)))
 konf.high  <- (0.0013729+(0.0002274*qt(1-(alpha/2), df=22)))
-
 
