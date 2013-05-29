@@ -117,12 +117,16 @@ summary(hubble.fit)
 # Regressionsgerade einzeichnen
 abline(hubble.fit)
 
+# Zeit ist Distanz dividiert durch die Geschwindigkeit
+
+
 # 
 
 # Konfidenzintervall = 95%
-alpha <- 0.95
+alpha <- 0.05
 # Vertrauensintervall bestimmen
 # intervall = Estimate +/- (Std. Error * qt(1-(alpha/2), Degree-of-Freedom))
 konf.low <- (0.0013729-(0.0002274*qt(1-(alpha/2), df=22)))
 konf.high  <- (0.0013729+(0.0002274*qt(1-(alpha/2), df=22)))
-
+konf.low
+konf.high
