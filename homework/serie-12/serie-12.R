@@ -17,11 +17,10 @@ abline(forbes.fit)
 plot(fitted(forbes.fit), resid(forbes.fit), main="Tukey-Anscombe Plot")
 abline(h=0)
 qqnorm(resid(forbes.fit))
-# der Tukey-Annscombe-Plot zeigt auf, dass es keinen systematischen Fehler gibt (?)
-# WAS IST EIN TUKEY-ANSCOMBE-PLOT???
-# der QQ-Norm-Plot zeigt: Fehler ist linear?
+# der Tukey-Anscombe-Plot zeigt auf, dass es einen systematischen Fehler gibt, denn die Punkte verlaufen in einer Parabelform
+# der QQ-Norm-Plot zeigt: kann normalverteilt sein, es ist keine spezielle Abweichung ersichtlich
 qqline(resid(forbes.fit))
-# einigermassen gerade???
+# 'qqline' zeigt es ist'qqline' zeigt es ist ziemlich gerade
 
 # 1d)
 # Druck logarithmieren und in Datensatz hinzufügen
@@ -40,7 +39,7 @@ plot(fitted(forbes.logfit), resid(forbes.logfit), main="Tukey-Anscombe Plot")
 qqnorm(resid(forbes.logfit))
 # Ja es gibt Ausreisser, gut sichbar wenn 'qqline' gezogen wird
 qqline(resid(forbes.logfit))
-# Modellannahmen? KEINE AHNUNG WAS GEMEINT IST!!!
+# Es gibt einen Ausreisser, die Modellannahme stimmt weil der Fehler normalverteilt ist???
 
 # 1f)
 # Ausreisser mittels 'identify' lokalisieren
@@ -52,12 +51,10 @@ forbes <- forbes[-12,]
 # plots nochmals erstellen
 # ich erkenne lediglich, dass der Tukey-Anscombe-Plot eine wildere Streuung aufzeigt
 
-# Benötigte Zeit um die Aufgabe 1 zu lösen: ca. 60 Minuten
+# Benötigte Zeit um die Aufgabe 1 zu lösen: ca. 60 Minuten zum lösen, ca. 45 korrigieren und besprechen
 # Alles Verstanden: NEIN
 # Offene Fragen: 
-# * Was Zeigt ein Tukey-Anscombe-Plot?
-# * Was macht 'fitted()'?
-
+# * Die Modellannahme stimmt, wenn der Fehler normalverteilt ist???
 
 # Aufgabe 2
 
@@ -117,16 +114,28 @@ summary(hubble.fit)
 # Regressionsgerade einzeichnen
 abline(hubble.fit)
 
-# Zeit ist Distanz dividiert durch die Geschwindigkeit
+# wir zwingen 'lm()' uns die Parameter so zu berechnen, dass die Regressionsgerade durch den Punkt (0;0) geht mit
+hubbe.zerofit <- lm(hubble.distance ~ 0+hubble.speed)
+abline(hubble.zerofit, col='blue')
+summary(hubble.zerofit)
+# wir können noch farblich hervorheben, dass es wirklich bei (0;0) durchgeht
+abline(h=0, col='red')
+abline(v=0, col='red')
 
+# Zeit ist Distanz dividiert durch die Geschwindigkeit, was der Steigung der Regressionsgerade entspricht, also rechnen wird die megaparsec-Sekunden * Steigung
+spaceage <- 979.8*0.001922
+spaceage
 
 # 
 
 # Konfidenzintervall = 95%
 alpha <- 0.05
 # Vertrauensintervall bestimmen
+# ACHTUNG: Wir wollen den Schnittpunkt (intercept) zu y=0 also zur x-Achse ermitteln bzw. das Vertrauensintervall dazu. Wir müssen also mit den Werten aus der '(Intercept)' Zeile arbeiten
 # intervall = Estimate +/- (Std. Error * qt(1-(alpha/2), Degree-of-Freedom))
-konf.low <- (0.0013729-(0.0002274*qt(1-(alpha/2), df=22)))
-konf.high  <- (0.0013729+(0.0002274*qt(1-(alpha/2), df=22)))
+konf.low <- (0.3990982-(0.1184697*qt(1-(alpha/2), df=22)))
+konf.high <- (0.3990982+(0.1184697*qt(1-(alpha/2), df=22)))
 konf.low
 konf.high
+
+# Benötigte Zeit für Aufgabe 3: ca. 60 Minuten Blut schwitzen und Skript konsolutieren ohne erfolg und dann noch ca. 40 Minuten zu zweit besprechen und korrigieren
